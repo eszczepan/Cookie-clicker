@@ -6,12 +6,12 @@ import Building from "components/molecules/Building/Building";
 const Store: FC = () => {
   return (
     <div className="storeContainer h-100">
-      <h2 className="title text-center p-2 mb-3">Store</h2>
+      <h2 className="storeTitle text-center p-2 mb-3">Store</h2>
       <div>
-        <h4 className="title text-center p-2 mb-2">Upgrades</h4>
+        <h4 className="storeTitle text-center p-2 mb-2">Upgrades</h4>
       </div>
       <div>
-        <h4 className="title text-center p-2">Buildings</h4>
+        <h4 className="storeTitle text-center p-2">Buildings</h4>
         <Building icon="CursorIcon" />
         <Building icon="GrandmaIcon" />
         <Building icon="FarmIcon" />
