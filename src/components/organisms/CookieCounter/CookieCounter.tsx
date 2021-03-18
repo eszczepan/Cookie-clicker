@@ -15,7 +15,7 @@ const CookieCounter: FC<IProps> = ({ counter, cps, setCounter }) => {
       <div className="w-100 my-3 py-1 d-flex flex-column text-center">
         <h4 className="progressTitle my-2 py-1">Level: 1</h4>
         <h3 className="progressTitle m-0 pt-1">
-          <span style={{ fontSize: "32px" }}>{counter}</span> cookies
+          <span>{counter}</span> cookies
         </h3>
         <p className="progressTitle m-0 pb-1">per second: {cps}</p>
       </div>

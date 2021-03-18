@@ -1,0 +1,21 @@
+.building {
+  max-height: 12vh;
+  cursor: pointer;
+}
+
+.building:hover {
+  background-color: #666;
+}
+
+.buildingImage {
+  max-width: 10vh;
+  max-height: 10vh;
+}
+
+.priceIcon {
+  max-width: 20px;
+}
+
+.buildingQuantity {
+  opacity: 0.9;
+}
