@@ -1,10 +1,20 @@
 .building {
   max-height: 12vh;
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.building.disabled{
+  background-color: transparent;
 }
 
 .building:hover {
   background-color: #666;
+}
+
+.building:active {
+  transform: translateY(4px);
 }
 
 .buildingImage {
