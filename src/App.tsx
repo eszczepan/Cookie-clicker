@@ -1,12 +1,13 @@
 import React, { FC, useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { Container, Row, Col, Navbar, Nav } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 import { statistics } from "data/statistics";
 import { buildings } from "data/buildings";
 import { cpsCounter } from "utils/cpsCounter";
 import { IBuilding, IStatistics } from "typings/models";
-import BigCookie from "assets/images/cookies/BigCookie.png";
+
+import MainTemplate from "components/templates/MainTemplate";
 import CookieCounter from "components/organisms/CookieCounter/CookieCounter";
 import Store from "components/organisms/Store/Store";
 
@@ -82,34 +83,7 @@ const App: FC = () => {
       </Helmet>
       {/*TODO*/}
 
-      <Container fluid className="vh-100 px-0">
-        <Navbar
-          className="d-flex justify-content-between"
-          bg="dark"
-          variant="dark"
-          collapseOnSelect
-          expand="sm"
-        >
-          <Navbar.Brand href="#">
-            <img
-              alt="cookie-clicker-logo"
-              src={BigCookie}
-              width="30"
-              height="30"
-              className="d-inline-block align-center ml-1"
-            />{" "}
-            Cookie Clicker
-          </Navbar.Brand>
-          <Nav>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav.Link href="#">Home</Nav.Link>
-              <Nav.Link href="#">Achievements</Nav.Link>
-              <Nav.Link href="#">Statistics</Nav.Link>
-            </Navbar.Collapse>
-          </Nav>
-        </Navbar>
-
+      <MainTemplate>
         <Row className="no-gutters" style={{ height: "calc(100% - 51.44px)" }}>
           <Col className="h-100">
             <CookieCounter
@@ -134,7 +108,7 @@ const App: FC = () => {
             />
           </Col>
         </Row>
-      </Container>
+      </MainTemplate>
     </>
   );
 };
