@@ -35,9 +35,9 @@ const Building: FC<IProps> = ({
       ? require(`../../../assets/icons/${icon64}.gif`).default
       : require(`../../../assets/icons/${icon64}.png`).default;
   const popover = (
-    <Popover id="popover-trigger-focus">
+    <Popover id="popover-trigger-focus" className="mw-100">
       <Popover.Title as="h3" className="text-primary">
-        <img src={popoverIcon} alt={icon64} />
+        <img className="buildingImage" src={popoverIcon} alt={icon64} />
         {title}
       </Popover.Title>
       <Popover.Content>
@@ -54,7 +54,7 @@ const Building: FC<IProps> = ({
   return (
     <OverlayTrigger
       trigger="focus"
-      placement="left"
+      placement="auto"
       overlay={popover}
       show={show}
     >
