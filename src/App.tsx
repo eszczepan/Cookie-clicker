@@ -90,7 +90,7 @@ const App: FC = () => {
               src={BigCookie}
               width="30"
               height="30"
-              className="d-inline-block align-top"
+              className="d-inline-block align-center ml-1"
             />{" "}
             Cookie Clicker
           </Navbar.Brand>
@@ -101,7 +101,7 @@ const App: FC = () => {
           </Nav>
         </Navbar>
 
-        <Row className="no-gutters" style={{ height: "calc(100% - 56px)" }}>
+        <Row className="no-gutters" style={{ height: "calc(100% - 51.44px)" }}>
           <Col className="h-100">
             <CookieCounter
               totalCookies={Math.round(progress.totalCookies)}

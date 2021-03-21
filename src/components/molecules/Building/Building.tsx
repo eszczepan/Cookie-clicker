@@ -7,6 +7,7 @@ import BigCookie from "assets/images/cookies/BigCookie.png";
 interface IProps {
   cost: number;
   cookies: number;
+  cps: number;
   description: string;
   icon: string;
   icon64: string;
@@ -19,6 +20,7 @@ interface IProps {
 const Building: FC<IProps> = ({
   cost,
   cookies,
+  cps,
   description,
   icon,
   icon64,
@@ -36,16 +38,33 @@ const Building: FC<IProps> = ({
       : require(`../../../assets/icons/${icon64}.png`).default;
   const popover = (
     <Popover id="popover-trigger-focus" className="mw-100">
-      <Popover.Title as="h3" className="text-primary">
+      <Popover.Title className="text-primary d-flex">
         <img className="buildingImage" src={popoverIcon} alt={icon64} />
-        {title}
+        <div className="d-flex align-items-center ml-3">
+          <h3>{title}</h3>
+        </div>
       </Popover.Title>
       <Popover.Content>
         <div>
-          {description}
-          <ul>
-            <li>{`cost: ${cost} cookies`}</li>
-            <li>{`owned: ${quantity}`}</li>
+          <strong>{description}</strong>
+          <ul className="my-1 px-4">
+            <li>
+              Cost: <strong>{cost}</strong> cookies
+            </li>
+            <li>
+              {quantity} producing{" "}
+              <strong>
+                {(quantity * Math.round((cps + Number.EPSILON) * 100)) / 100}
+              </strong>{" "}
+              cookies per second
+            </li>
+            <li>
+              Each {title.toLowerCase()} produces <strong>{cps}</strong> cookies
+              per second
+            </li>
+            <li>
+              Owned: <strong>{quantity}</strong>
+            </li>
           </ul>
         </div>
       </Popover.Content>
@@ -74,7 +93,7 @@ const Building: FC<IProps> = ({
             alt={icon}
           />
           <div className="d-flex flex-column justify-content-around">
-            <p className="h6 font-weight-bold m-0">{title}</p>
+            <p className="h5 font-weight-bold m-0">{title}</p>
             <p className="text-success">
               <span>
                 <img className="priceIcon mr-1" src={BigCookie} alt="" />

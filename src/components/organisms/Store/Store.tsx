@@ -37,6 +37,7 @@ const Store: FC<IProps> = ({
               <Building
                 key={b.title}
                 cost={b.cost}
+                cps={b.cps}
                 cookies={cookies}
                 description={b.description}
                 icon={b.icon}
