@@ -1,6 +1,7 @@
 export const buildings = [
   {
     title: "Cursor",
+    description: "Autoclicks once every 10 seconds.",
     quantity: 0,
     icon: "CursorIcon",
     baseCost: 15,
@@ -11,6 +12,7 @@ export const buildings = [
   },
   {
     title: "Grandma",
+    description: "A nice grandma to bake more cookies.",
     quantity: 0,
     icon: "GrandmaIcon",
     baseCost: 100,
@@ -21,6 +23,7 @@ export const buildings = [
   },
   {
     title: "Farm",
+    description: "Grows cookie plants from cookie seeds.",
     quantity: 0,
     icon: "FarmIcon",
     baseCost: 1100,
@@ -31,6 +34,7 @@ export const buildings = [
   },
   {
     title: "Mine",
+    description: "Mines out cookie dough and chocolate chips.",
     quantity: 0,
     icon: "MineIcon",
     baseCost: 12000,
@@ -41,6 +45,7 @@ export const buildings = [
   },
   {
     title: "Factory",
+    description: "Produces large qantitties of cookies.",
     quantity: 0,
     icon: "FactoryIcon",
     baseCost: 130000,
@@ -51,6 +56,7 @@ export const buildings = [
   },
   {
     title: "Bank",
+    description: "Generates cookies from interest.",
     quantity: 0,
     icon: "BankIcon",
     baseCost: 1400000,
@@ -61,6 +67,7 @@ export const buildings = [
   },
   {
     title: "Temple",
+    description: "Full of precious, ancient chocolate.",
     quantity: 0,
     icon: "TempleIcon",
     baseCost: 20000000,
@@ -71,6 +78,7 @@ export const buildings = [
   },
   {
     title: "Wizard Tower",
+    description: "Summons cookies with magic spells.",
     quantity: 0,
     icon: "WizardTowerIcon",
     baseCost: 330000000,
@@ -81,6 +89,7 @@ export const buildings = [
   },
   {
     title: "Shipment",
+    description: "Brings in fresh cookies from the cookie planet.",
     quantity: 0,
     icon: "ShipmentIcon",
     baseCost: 5100000000,
@@ -91,6 +100,7 @@ export const buildings = [
   },
   {
     title: "Alchemy Lab",
+    description: "Turns gold into cookies!",
     quantity: 0,
     icon: "AlchemyLabIcon",
     baseCost: 75000000000,

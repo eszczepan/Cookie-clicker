@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 import "./Store.css";
-import { ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 import { IBuilding } from "typings/models";
 import Building from "components/molecules/Building/Building";
 
@@ -9,13 +9,23 @@ interface IProps {
   buildings: IBuilding[];
   cookies: number;
   handlePurchase(cost: number, index: number): void;
+  handleResetProgress(): void;
   level: number;
 }
 
-const Store: FC<IProps> = ({ buildings, cookies, handlePurchase, level }) => {
+const Store: FC<IProps> = ({
+  buildings,
+  cookies,
+  handlePurchase,
+  handleResetProgress,
+  level,
+}) => {
   return (
     <div className="storeContainer h-100">
-      <h2 className="storeTitle text-center p-2 mb-3">Store</h2>
+      <div className="d-flex justify-content-end">
+        <Button onClick={handleResetProgress}>Reset Progress</Button>
+      </div>
+      <h2 className="text-center p-2 mb-3">Store</h2>
       <div>
         <h4 className="storeTitle text-center p-2 mb-2">Upgrades</h4>
       </div>
@@ -28,6 +38,7 @@ const Store: FC<IProps> = ({ buildings, cookies, handlePurchase, level }) => {
                 key={b.title}
                 cost={b.cost}
                 cookies={cookies}
+                description={b.description}
                 icon={b.icon}
                 index={i}
                 title={b.title}

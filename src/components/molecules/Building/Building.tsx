@@ -1,12 +1,13 @@
-import React, { FC } from "react";
+import React, { FC, useState, useRef } from "react";
 
 import "./Building.css";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, OverlayTrigger, Popover } from "react-bootstrap";
 import BigCookie from "assets/images/cookies/BigCookie.png";
 
 interface IProps {
   cost: number;
   cookies: number;
+  description: string;
   icon: string;
   index: number;
   title: string;
@@ -17,19 +18,38 @@ interface IProps {
 const Building: FC<IProps> = ({
   cost,
   cookies,
+  description,
   icon,
   index,
   title,
   quantity,
   handlePurchase,
 }) => {
+  const [show, setShow] = useState(false);
+  const target = useRef(null);
   const isDisabled = cookies < cost ? true : false;
+  const popover = (
+    <Popover id="popover-trigger-focus">
+      <Popover.Title as="h3" className="text-info">
+        {title}
+      </Popover.Title>
+      <Popover.Content>{description}</Popover.Content>
+    </Popover>
+  );
   return (
-    <>
+    <OverlayTrigger
+      trigger="focus"
+      placement="left"
+      overlay={popover}
+      show={show}
+    >
       <ListGroup.Item
+        onMouseEnter={() => setShow(true)}
+        onMouseLeave={() => setShow(false)}
+        ref={target}
         as="li"
         disabled={isDisabled}
-        className="building d-flex my-2 pr-2 justify-content-between align-items-center"
+        className="building d-flex my-2 p-0 pr-2 justify-content-between align-items-center"
         onClick={() => handlePurchase(cost, index)}
       >
         <div className="d-flex align-items-center">
@@ -50,7 +70,7 @@ const Building: FC<IProps> = ({
         </div>
         <p className="buildingQuantity h3">{quantity}</p>
       </ListGroup.Item>
-    </>
+    </OverlayTrigger>
   );
 };
 

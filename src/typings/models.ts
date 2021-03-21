@@ -1,5 +1,6 @@
 export interface IBuilding {
   title: string;
+  description: string;
   quantity: number;
   icon: string;
   baseCost: number;

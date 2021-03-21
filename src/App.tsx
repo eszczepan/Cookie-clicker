@@ -5,7 +5,7 @@ import { Container, Row, Col, Navbar, Nav } from "react-bootstrap";
 import { statistics } from "data/statistics";
 import { buildings } from "data/buildings";
 import { cpsCounter } from "utils/cpsCounter";
-import { IStatistics } from "typings/models";
+import { IBuilding, IStatistics } from "typings/models";
 import BigCookie from "assets/images/cookies/BigCookie.png";
 import CookieCounter from "components/organisms/CookieCounter/CookieCounter";
 import Store from "components/organisms/Store/Store";
@@ -65,6 +65,11 @@ const App: FC = () => {
     }));
   };
 
+  const handleResetProgress = () => {
+    setBuildingProgress((prevState: IStatistics) => buildings);
+    setProgress((prevState: IBuilding) => statistics);
+  };
+
   return (
     <>
       {/*TODO*/}
@@ -112,6 +117,7 @@ const App: FC = () => {
               buildings={buildingProgress}
               cookies={progress.cookies}
               handlePurchase={handleBuildingPurchase}
+              handleResetProgress={handleResetProgress}
               level={progress.level}
             />
           </Col>
