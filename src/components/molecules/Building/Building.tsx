@@ -52,15 +52,15 @@ const Building: FC<IProps> = ({
               Cost: <strong>{cost}</strong> cookies
             </li>
             <li>
+              Each {title.toLowerCase()} produces <strong>{cps}</strong> cookies
+              per second
+            </li>
+            <li>
               {quantity} producing{" "}
               <strong>
                 {(quantity * Math.round((cps + Number.EPSILON) * 100)) / 100}
               </strong>{" "}
               cookies per second
-            </li>
-            <li>
-              Each {title.toLowerCase()} produces <strong>{cps}</strong> cookies
-              per second
             </li>
             <li>
               Owned: <strong>{quantity}</strong>

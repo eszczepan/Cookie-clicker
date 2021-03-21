@@ -83,7 +83,13 @@ const App: FC = () => {
       {/*TODO*/}
 
       <Container fluid className="vh-100 px-0">
-        <Navbar bg="dark" variant="dark">
+        <Navbar
+          className="d-flex justify-content-between"
+          bg="dark"
+          variant="dark"
+          collapseOnSelect
+          expand="sm"
+        >
           <Navbar.Brand href="#">
             <img
               alt="cookie-clicker-logo"
@@ -94,10 +100,13 @@ const App: FC = () => {
             />{" "}
             Cookie Clicker
           </Navbar.Brand>
-          <Nav className="mr-auto">
-            {/* <Nav.Link href="#">Home</Nav.Link>
-            <Nav.Link href="#">Achievements</Nav.Link>
-            <Nav.Link href="#">Statistics</Nav.Link> */}
+          <Nav>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav.Link href="#">Home</Nav.Link>
+              <Nav.Link href="#">Achievements</Nav.Link>
+              <Nav.Link href="#">Statistics</Nav.Link>
+            </Navbar.Collapse>
           </Nav>
         </Navbar>
 

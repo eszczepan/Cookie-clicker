@@ -26,9 +26,9 @@ const Store: FC<IProps> = ({
         <Button onClick={handleResetProgress}>Reset Progress</Button>
       </div>
       <h2 className="text-center p-2 mb-3">Store</h2>
-      <div>
+      {/* <div>
         <h4 className="storeTitle text-center p-2 mb-2">Upgrades</h4>
-      </div>
+      </div> */}
       <div>
         <h4 className="storeTitle text-center p-2">Buildings</h4>
         <ListGroup>
