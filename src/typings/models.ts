@@ -8,3 +8,13 @@ export interface IBuilding {
   cps: number;
   upgrade: number;
 }
+
+export interface IStatistics {
+  cookies: number;
+  totalCookies: number;
+  cookieClicks: number;
+  cookiesPerSecond: number;
+  level: number;
+  nextLevel: number;
+  buildings: number;
+}

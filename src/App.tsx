@@ -5,34 +5,41 @@ import { Container, Row, Col, Navbar, Nav } from "react-bootstrap";
 import { statistics } from "data/statistics";
 import { buildings } from "data/buildings";
 import { cpsCounter } from "utils/cpsCounter";
+import { IStatistics } from "typings/models";
 import BigCookie from "assets/images/cookies/BigCookie.png";
 import CookieCounter from "components/organisms/CookieCounter/CookieCounter";
 import Store from "components/organisms/Store/Store";
 
 const App: FC = () => {
-  const [progress, setProgress] = useState(statistics);
-  const [buildingProgress, setBuildingProgress] = useState(buildings);
+  const [progress, setProgress] = useState(
+    JSON.parse(localStorage.getItem("Progress")!) || statistics
+  );
+  const [buildingProgress, setBuildingProgress] = useState(
+    JSON.parse(localStorage.getItem("Buildings")!) || buildings
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((prevState) => ({
+      setProgress((prevState: IStatistics) => ({
         ...prevState,
         cookies: prevState.cookies + prevState.cookiesPerSecond / 10,
         totalCookies: prevState.totalCookies + prevState.cookiesPerSecond / 10,
       }));
+      localStorage.setItem("Progress", JSON.stringify(progress));
+      localStorage.setItem("Buildings", JSON.stringify(buildingProgress));
     }, 100);
     if (Math.round(progress.totalCookies) >= progress.nextLevel) {
-      setProgress((prevState) => ({
+      setProgress((prevState: IStatistics) => ({
         ...prevState,
         level: prevState.level + 1,
         nextLevel: prevState.nextLevel * 2,
       }));
     }
     return () => clearInterval(interval);
-  }, [progress.totalCookies, progress.nextLevel]);
+  }, [progress, buildingProgress]);
 
   const handleCookieClick = () =>
-    setProgress((prevState) => ({
+    setProgress((prevState: IStatistics) => ({
       ...prevState,
       cookies: prevState.cookies + 1,
       totalCookies: prevState.totalCookies + 1,
@@ -51,7 +58,7 @@ const App: FC = () => {
         : el;
     });
     setBuildingProgress(updatedProgress);
-    setProgress((prevState) => ({
+    setProgress((prevState: IStatistics) => ({
       ...prevState,
       cookies: prevState.cookies - cost,
       cookiesPerSecond: cpsCounter(updatedProgress),
