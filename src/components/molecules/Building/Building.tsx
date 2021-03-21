@@ -9,6 +9,7 @@ interface IProps {
   cookies: number;
   description: string;
   icon: string;
+  icon64: string;
   index: number;
   title: string;
   quantity: number;
@@ -20,6 +21,7 @@ const Building: FC<IProps> = ({
   cookies,
   description,
   icon,
+  icon64,
   index,
   title,
   quantity,
@@ -28,12 +30,25 @@ const Building: FC<IProps> = ({
   const [show, setShow] = useState(false);
   const target = useRef(null);
   const isDisabled = cookies < cost ? true : false;
+  const popoverIcon =
+    title === "Grandma"
+      ? require(`../../../assets/icons/${icon64}.gif`).default
+      : require(`../../../assets/icons/${icon64}.png`).default;
   const popover = (
     <Popover id="popover-trigger-focus">
-      <Popover.Title as="h3" className="text-info">
+      <Popover.Title as="h3" className="text-primary">
+        <img src={popoverIcon} alt={icon64} />
         {title}
       </Popover.Title>
-      <Popover.Content>{description}</Popover.Content>
+      <Popover.Content>
+        <div>
+          {description}
+          <ul>
+            <li>{`cost: ${cost} cookies`}</li>
+            <li>{`owned: ${quantity}`}</li>
+          </ul>
+        </div>
+      </Popover.Content>
     </Popover>
   );
   return (

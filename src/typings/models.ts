@@ -3,6 +3,7 @@ export interface IBuilding {
   description: string;
   quantity: number;
   icon: string;
+  icon64: string;
   baseCost: number;
   cost: number;
   baseCps: number;

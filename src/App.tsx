@@ -106,7 +106,10 @@ const App: FC = () => {
             <CookieCounter
               totalCookies={Math.round(progress.totalCookies)}
               counter={Math.round(progress.cookies)}
-              cps={progress.cookiesPerSecond}
+              cps={
+                Math.round((progress.cookiesPerSecond + Number.EPSILON) * 100) /
+                100
+              }
               level={progress.level}
               setCounter={handleCookieClick}
               nextLevel={progress.nextLevel}

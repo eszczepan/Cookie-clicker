@@ -40,6 +40,7 @@ const Store: FC<IProps> = ({
                 cookies={cookies}
                 description={b.description}
                 icon={b.icon}
+                icon64={b.icon64}
                 index={i}
                 title={b.title}
                 quantity={b.quantity}
