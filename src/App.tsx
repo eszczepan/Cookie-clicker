@@ -63,6 +63,7 @@ const App: FC = () => {
       ...prevState,
       cookies: prevState.cookies - cost,
       cookiesPerSecond: cpsCounter(updatedProgress),
+      buildings: prevState.buildings + 1,
     }));
   };
 
