@@ -22,9 +22,6 @@ const Store: FC<IProps> = ({
 }) => {
   return (
     <div className="storeContainer h-100">
-      <div className="d-flex justify-content-end">
-        <Button onClick={handleResetProgress}>Reset Progress</Button>
-      </div>
       <h2 className="text-center p-2 mb-3">Store</h2>
       <div>
         <h4 className="storeTitle text-center p-2">Buildings</h4>
@@ -47,6 +44,9 @@ const Store: FC<IProps> = ({
             ) : null;
           })}
         </ListGroup>
+        <div className="d-flex justify-content-center my-2">
+          <Button onClick={handleResetProgress}>Reset Progress</Button>
+        </div>
       </div>
     </div>
   );
