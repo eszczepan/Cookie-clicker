@@ -59,8 +59,8 @@
 .milkWave {
   height: 20%;
   width:100%;
-  background: #fff;
-  position: relative;
+  background: transparent;
+  overflow: hidden;
 }
 
 

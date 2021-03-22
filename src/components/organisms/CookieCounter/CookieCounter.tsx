@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
 import BigCookie from "assets/images/cookies/BigCookie.png";
+import Milk from "assets/images/background/milk-img.png";
 import "./CookieCounter.css";
 
 interface IProps {
@@ -36,7 +37,9 @@ const CookieCounter: FC<IProps> = ({
       <div onClick={setCounter} className="cookieContainer">
         <img className="cookieImage" src={BigCookie} alt="Big Cookie" />
       </div>
-      <div className="milkWave"></div>
+      <div className="milkWave">
+        <img className="w-100 h-100" src={Milk} alt="Big Cookie" />
+      </div>
     </div>
   );
 };
