@@ -74,15 +74,14 @@ const App: FC = () => {
 
   return (
     <>
-      {/*TODO*/}
       <Helmet>
         <meta charSet="utf-8" />
         <title>
           {Math.round(progress.cookies).toString()} cookies | Cookie Clicker
         </title>
-        <link rel="canonical" href="http://mysite.com/example" />
+        <meta name="description" content="Cookie Clicker game" />
+        <meta name="theme-color" content="#666" />
       </Helmet>
-      {/*TODO*/}
 
       <MainTemplate>
         <Row className="no-gutters" style={{ height: "calc(100% - 51.44px)" }}>
