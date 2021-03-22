@@ -1,8 +1,8 @@
-import React, { FC, useState, useRef } from "react";
+import React, { FC, useState, useRef } from 'react';
 
-import "./Building.css";
-import { ListGroup, OverlayTrigger, Popover } from "react-bootstrap";
-import BigCookie from "assets/images/cookies/BigCookie.png";
+import './Building.css';
+import { ListGroup, OverlayTrigger, Popover } from 'react-bootstrap';
+import BigCookie from 'assets/images/cookies/BigCookie.png';
 
 interface IProps {
   cost: number;
@@ -33,7 +33,7 @@ const Building: FC<IProps> = ({
   const target = useRef(null);
   const isDisabled = cookies < cost ? true : false;
   const popoverIcon =
-    title === "Grandma"
+    title === 'Grandma'
       ? require(`../../../assets/icons/${icon64}.gif`).default
       : require(`../../../assets/icons/${icon64}.png`).default;
   const popover = (
@@ -56,10 +56,10 @@ const Building: FC<IProps> = ({
               per second
             </li>
             <li>
-              {quantity} producing{" "}
+              {quantity} producing{' '}
               <strong>
                 {(quantity * Math.round((cps + Number.EPSILON) * 100)) / 100}
-              </strong>{" "}
+              </strong>{' '}
               cookies per second
             </li>
             <li>

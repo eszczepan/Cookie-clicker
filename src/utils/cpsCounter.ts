@@ -1,4 +1,4 @@
-import { IBuilding } from "typings/models";
+import { IBuilding } from 'typings/models';
 
 export const cpsCounter = (buildings: IBuilding[]) => {
   return buildings.reduce((cps, bObj) => {

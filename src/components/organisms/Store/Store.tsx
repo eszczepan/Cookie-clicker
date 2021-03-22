@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
-import "./Store.css";
-import { Button, ListGroup } from "react-bootstrap";
-import { IBuilding } from "typings/models";
-import Building from "components/molecules/Building/Building";
+import './Store.css';
+import { Button, ListGroup } from 'react-bootstrap';
+import { IBuilding } from 'typings/models';
+import Building from 'components/molecules/Building/Building';
 
 interface IProps {
   buildings: IBuilding[];
@@ -26,9 +26,6 @@ const Store: FC<IProps> = ({
         <Button onClick={handleResetProgress}>Reset Progress</Button>
       </div>
       <h2 className="text-center p-2 mb-3">Store</h2>
-      {/* <div>
-        <h4 className="storeTitle text-center p-2 mb-2">Upgrades</h4>
-      </div> */}
       <div>
         <h4 className="storeTitle text-center p-2">Buildings</h4>
         <ListGroup>

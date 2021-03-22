@@ -1,22 +1,22 @@
-import React, { FC, useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
-import { Row, Col } from "react-bootstrap";
+import React, { FC, useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { Row, Col } from 'react-bootstrap';
 
-import { statistics } from "data/statistics";
-import { buildings } from "data/buildings";
-import { cpsCounter } from "utils/cpsCounter";
-import { IBuilding, IStatistics } from "typings/models";
+import { statistics } from 'data/statistics';
+import { buildings } from 'data/buildings';
+import { cpsCounter } from 'utils/cpsCounter';
+import { IBuilding, IStatistics } from 'typings/models';
 
-import MainTemplate from "components/templates/MainTemplate";
-import CookieCounter from "components/organisms/CookieCounter/CookieCounter";
-import Store from "components/organisms/Store/Store";
+import MainTemplate from 'components/templates/MainTemplate';
+import CookieCounter from 'components/organisms/CookieCounter/CookieCounter';
+import Store from 'components/organisms/Store/Store';
 
 const App: FC = () => {
   const [progress, setProgress] = useState(
-    JSON.parse(localStorage.getItem("Progress")!) || statistics
+    JSON.parse(localStorage.getItem('Progress')!) || statistics
   );
   const [buildingProgress, setBuildingProgress] = useState(
-    JSON.parse(localStorage.getItem("Buildings")!) || buildings
+    JSON.parse(localStorage.getItem('Buildings')!) || buildings
   );
 
   useEffect(() => {
@@ -26,8 +26,8 @@ const App: FC = () => {
         cookies: prevState.cookies + prevState.cookiesPerSecond / 10,
         totalCookies: prevState.totalCookies + prevState.cookiesPerSecond / 10,
       }));
-      localStorage.setItem("Progress", JSON.stringify(progress));
-      localStorage.setItem("Buildings", JSON.stringify(buildingProgress));
+      localStorage.setItem('Progress', JSON.stringify(progress));
+      localStorage.setItem('Buildings', JSON.stringify(buildingProgress));
     }, 100);
     if (Math.round(progress.totalCookies) >= progress.nextLevel) {
       setProgress((prevState: IStatistics) => ({
@@ -84,7 +84,7 @@ const App: FC = () => {
       </Helmet>
 
       <MainTemplate>
-        <Row className="no-gutters" style={{ height: "calc(100% - 51.44px)" }}>
+        <Row className="no-gutters" style={{ height: 'calc(100% - 51.44px)' }}>
           <Col className="h-100">
             <CookieCounter
               totalCookies={Math.round(progress.totalCookies)}

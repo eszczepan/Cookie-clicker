@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Container, Navbar, Nav } from "react-bootstrap";
-import BigCookie from "assets/images/cookies/BigCookie.png";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Container, Navbar, Nav } from 'react-bootstrap';
+import BigCookie from 'assets/images/cookies/BigCookie.png';
 
 type Props = {
   children: React.ReactElement;
@@ -24,7 +24,7 @@ const MainTemplate = ({ children }: Props) => {
             width="30"
             height="30"
             className="d-inline-block align-center ml-1"
-          />{" "}
+          />{' '}
           Cookie Clicker
         </Navbar.Brand>
         <Nav>

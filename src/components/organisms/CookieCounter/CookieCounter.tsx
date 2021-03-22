@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
-import BigCookie from "assets/images/cookies/BigCookie.png";
-import Milk from "assets/images/background/milk-img.png";
-import "./CookieCounter.css";
+import BigCookie from 'assets/images/cookies/BigCookie.png';
+import Milk from 'assets/images/background/milk-img.png';
+import './CookieCounter.css';
 
 interface IProps {
   totalCookies: number;
