@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-
 import { Card } from 'react-bootstrap';
+
 import { statistics } from 'data/statistics';
+import { IStatistics } from 'typings/models';
 import StatsImg1 from 'assets/images/statistics/stats-1.png';
 import StatsImg2 from 'assets/images/statistics/stats-2.png';
 import StatsImg3 from 'assets/images/statistics/stats-3.png';
@@ -11,7 +12,7 @@ import StatsImg6 from 'assets/images/statistics/stats-6.png';
 import MainTemplate from 'components/templates/MainTemplate';
 
 const Statistics = () => {
-  const [progress, setProgress] = useState(
+  const [progress, _] = useState<IStatistics>(
     JSON.parse(localStorage.getItem('Progress')!) || statistics
   );
 
