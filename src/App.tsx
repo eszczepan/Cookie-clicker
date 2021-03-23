@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Row, Col } from 'react-bootstrap';
 
+import { nFormatter } from 'utils/nFormatter';
 import { statistics } from 'data/statistics';
 import { buildings } from 'data/buildings';
 import { achievements } from 'data/achievements';
