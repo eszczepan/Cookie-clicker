@@ -16,6 +16,7 @@ import MainTemplate from 'components/templates/MainTemplate';
 import CookieCounter from 'components/organisms/CookieCounter/CookieCounter';
 import Store from 'components/organisms/Store/Store';
 import Achievements from 'components/organisms/Achievements/Achievements';
+import { nFormatter } from 'utils/nFormatter';
 
 const App: FC = () => {
   const [progress, setProgress] = useState<IStatistics>(
@@ -138,7 +139,7 @@ const App: FC = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{Math.round(progress.cookies).toString()} cookies | Cookie Clicker</title>
+        <title>{nFormatter(progress.cookies).toString()} cookies | Cookie Clicker</title>
         <meta name="description" content="Cookie Clicker game" />
         <meta name="theme-color" content="#666" />
       </Helmet>
