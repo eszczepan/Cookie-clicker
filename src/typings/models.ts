@@ -20,3 +20,11 @@ export interface IStatistics {
   nextLevel: number;
   buildings: number;
 }
+
+export interface IAchievement {
+  id: number;
+  icon: string;
+  title: string;
+  description: string;
+  condition: number;
+}
