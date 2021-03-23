@@ -1,7 +1,8 @@
 import React, { FC, useState, useRef } from 'react';
+import { ListGroup, OverlayTrigger, Popover } from 'react-bootstrap';
 
 import './Building.css';
-import { ListGroup, OverlayTrigger, Popover } from 'react-bootstrap';
+import { nFormatter } from 'utils/nFormatter';
 import BigCookie from 'assets/images/cookies/BigCookie.png';
 
 interface IProps {
@@ -49,16 +50,16 @@ const Building: FC<IProps> = ({
           <strong>{description}</strong>
           <ul className="my-1 px-4">
             <li>
-              Cost: <strong>{cost}</strong> cookies
+              Cost: <strong>{nFormatter(cost)}</strong> cookies
             </li>
             <li>
-              Each {title.toLowerCase()} produces <strong>{cps}</strong> cookies
-              per second
+              Each {title.toLowerCase()} produces <strong>{nFormatter(cps)}</strong> cookies per
+              second
             </li>
             <li>
               {quantity} producing{' '}
               <strong>
-                {(quantity * Math.round((cps + Number.EPSILON) * 100)) / 100}
+                {nFormatter((quantity * Math.round((cps + Number.EPSILON) * 100)) / 100)}
               </strong>{' '}
               cookies per second
             </li>
@@ -71,12 +72,7 @@ const Building: FC<IProps> = ({
     </Popover>
   );
   return (
-    <OverlayTrigger
-      trigger="focus"
-      placement="auto"
-      overlay={popover}
-      show={show}
-    >
+    <OverlayTrigger trigger="focus" placement="auto" overlay={popover} show={show}>
       <ListGroup.Item
         onMouseEnter={() => setShow(true)}
         onMouseLeave={() => setShow(false)}
@@ -98,7 +94,7 @@ const Building: FC<IProps> = ({
               <span>
                 <img className="priceIcon mr-1" src={BigCookie} alt="" />
               </span>
-              {cost}
+              {nFormatter(cost)}
             </p>
           </div>
         </div>

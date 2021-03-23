@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 
+import { nFormatter } from 'utils/nFormatter';
 import { statistics } from 'data/statistics';
 import { IStatistics } from 'typings/models';
 import StatsImg1 from 'assets/images/statistics/stats-1.png';
@@ -22,7 +23,7 @@ const Statistics = () => {
         <Card className="bg-info p-4 mb-3 rounded" style={{ width: '18rem' }}>
           <Card.Img variant="top" src={StatsImg1} />
           <Card.Body className="text-center">
-            <Card.Title>{Math.round(progress.cookies)}</Card.Title>
+            <Card.Title>{nFormatter(progress.cookies)}</Card.Title>
             <Card.Text>Cookies in bank</Card.Text>
           </Card.Body>
         </Card>
@@ -30,7 +31,7 @@ const Statistics = () => {
         <Card className="bg-info p-4 mb-3 rounded" style={{ width: '18rem' }}>
           <Card.Img variant="top" src={StatsImg2} />
           <Card.Body className="text-center">
-            <Card.Title>{Math.round(progress.totalCookies)}</Card.Title>
+            <Card.Title>{nFormatter(progress.totalCookies)}</Card.Title>
             <Card.Text>Cookies baked (all time)</Card.Text>
           </Card.Body>
         </Card>
@@ -62,7 +63,7 @@ const Statistics = () => {
         <Card className="bg-info p-4 mb-3 rounded" style={{ width: '18rem' }}>
           <Card.Img variant="top" src={StatsImg6} />
           <Card.Body className="text-center">
-            <Card.Title>{progress.cookiesPerSecond}</Card.Title>
+            <Card.Title>{nFormatter(progress.cookiesPerSecond)}</Card.Title>
             <Card.Text>Cookies per second</Card.Text>
           </Card.Body>
         </Card>
