@@ -18,6 +18,9 @@ import CookieCounter from 'components/organisms/CookieCounter/CookieCounter';
 import Store from 'components/organisms/Store/Store';
 import Achievements from 'components/organisms/Achievements/Achievements';
 
+import StatisticsStore from 'stores/StatisticsStore';
+import { observer } from 'mobx-react';
+
 const App: FC = () => {
   const [progress, setProgress] = useState<IStatistics>(
     JSON.parse(localStorage.getItem('Progress')!) || statistics
@@ -38,6 +41,11 @@ const App: FC = () => {
     JSON.parse(localStorage.getItem('cpsAchievementsData')!) || cpsAchievements
   );
   const [currentAchievements, setCurrentAchievements] = useState<IAchievement[]>(achievements);
+
+  useEffect(() => {
+    StatisticsStore.progress.cookies++;
+    console.log(StatisticsStore.progress.cookies);
+  }, []);
 
   // Interval update progress
   useEffect(() => {
@@ -179,4 +187,4 @@ const App: FC = () => {
   );
 };
 
-export default App;
+export default observer(App);
