@@ -22,7 +22,7 @@ export const persistStore = <T extends Record<string, any>, P extends keyof T>(
       },
     }),
     reactionOptions: {
-      delay: 200,
+      delay: 100,
     },
   })(target);
 };

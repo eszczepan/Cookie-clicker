@@ -42,7 +42,7 @@ const App: FC = () => {
   );
   const [currentAchievements, setCurrentAchievements] = useState<IAchievement[]>(achievements);
 
-  const { statistic } = useStores();
+  const { statistic, achievement } = useStores();
 
   // Interval update progress
   useEffect(() => {
@@ -81,8 +81,8 @@ const App: FC = () => {
 
   // Handle cookie click and check clicking achievements
   const handleCookieClick = () => {
-    statistic.cookieInc();
-    statistic.tCookieInc();
+    // statistic.cookieInc();
+    // statistic.tCookieInc();
     setProgress((prevState) => ({
       ...prevState,
       cookies: prevState.cookies + 1,
@@ -91,6 +91,7 @@ const App: FC = () => {
     }));
     const newAchievement = checkAchievement(progress.cookieClicks + 1, clickingAchievementsData);
     if (newAchievement !== null) {
+      achievement.add(newAchievement);
       const updated = [...clickingAchievementsData].filter((obj) => newAchievement.id !== obj.id);
       setClickingAchievementsData((prevState) => updated);
       setAchievementsProgress((prevState) => [...prevState, newAchievement]);
@@ -137,6 +138,7 @@ const App: FC = () => {
     setClickingAchievementsData(clickingAchievements);
     setCpsAchievementsData(cpsAchievements);
     statistic.clearStore();
+    achievement.clearStore();
   };
 
   const handleRemoveAchievement = (id: number) => {

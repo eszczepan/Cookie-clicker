@@ -4,13 +4,13 @@ import { clearPersist, stopPersist, startPersist } from 'mobx-persist-store';
 import { persistStore } from './persistStore';
 
 export class StatisticsStore {
-  cookies = 0;
-  totalCookies = 0;
-  cookieClicks = 0;
-  cookiesPerSecond = 0;
-  level = 1;
-  nextLevel = 10;
-  buildings = 0;
+  cookies: number = 0;
+  totalCookies: number = 0;
+  cookieClicks: number = 0;
+  cookiesPerSecond: number = 0;
+  level: number = 1;
+  nextLevel: number = 10;
+  buildings: number = 0;
 
   constructor() {
     makeAutoObservable(this);
