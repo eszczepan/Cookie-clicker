@@ -18,7 +18,7 @@ import CookieCounter from 'components/organisms/CookieCounter/CookieCounter';
 import Store from 'components/organisms/Store/Store';
 import Achievements from 'components/organisms/Achievements/Achievements';
 
-import StatisticsStore from 'stores/StatisticsStore';
+import { useStores } from 'stores/RootStore';
 import { observer } from 'mobx-react';
 
 const App: FC = () => {
@@ -42,10 +42,7 @@ const App: FC = () => {
   );
   const [currentAchievements, setCurrentAchievements] = useState<IAchievement[]>(achievements);
 
-  useEffect(() => {
-    StatisticsStore.progress.cookies++;
-    console.log(StatisticsStore.progress.cookies);
-  }, []);
+  const { statistic } = useStores();
 
   // Interval update progress
   useEffect(() => {
@@ -84,6 +81,8 @@ const App: FC = () => {
 
   // Handle cookie click and check clicking achievements
   const handleCookieClick = () => {
+    statistic.cookieInc();
+    statistic.tCookieInc();
     setProgress((prevState) => ({
       ...prevState,
       cookies: prevState.cookies + 1,
@@ -137,6 +136,7 @@ const App: FC = () => {
     setCookiesAchievementsData(cookiesAchievements);
     setClickingAchievementsData(clickingAchievements);
     setCpsAchievementsData(cpsAchievements);
+    statistic.clearStore();
   };
 
   const handleRemoveAchievement = (id: number) => {

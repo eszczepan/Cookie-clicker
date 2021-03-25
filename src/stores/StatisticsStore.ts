@@ -1,42 +1,58 @@
 import { makeAutoObservable } from 'mobx';
-import { clearPersist, isSynchronized } from 'mobx-persist-store';
+import { clearPersist, stopPersist, startPersist } from 'mobx-persist-store';
 
-import { statistics } from 'data/statistics';
 import { persistStore } from './persistStore';
 
-class StatisticsStore {
-  progress = statistics;
+export class StatisticsStore {
+  cookies = 0;
+  totalCookies = 0;
+  cookieClicks = 0;
+  cookiesPerSecond = 0;
+  level = 1;
+  nextLevel = 10;
+  buildings = 0;
 
   constructor() {
     makeAutoObservable(this);
-    persistStore(this, ['progress'], 'StatisticsStore');
+    persistStore(
+      this,
+      [
+        'cookies',
+        'totalCookies',
+        'cookieClicks',
+        'cookiesPerSecond',
+        'level',
+        'nextLevel',
+        'buildings',
+      ],
+      'StatisticsStore'
+    );
   }
 
-  clearStore = () => {
-    clearPersist(this);
+  cookieInc = () => {
+    this.cookies = this.cookies + 1;
   };
 
-  get isSynchronized() {
-    return isSynchronized(this);
+  tCookieInc = () => {
+    this.totalCookies = this.totalCookies + 1;
+  };
+
+  clearStore() {
+    clearPersist(this);
+    this.cookies = 0;
+    this.totalCookies = 0;
+    this.cookieClicks = 0;
+    this.cookiesPerSecond = 0;
+    this.level = 1;
+    this.nextLevel = 10;
+    this.buildings = 0;
+  }
+
+  stopPersist() {
+    stopPersist(this);
+  }
+
+  startPersist() {
+    startPersist(this);
   }
 }
-
-export default new StatisticsStore();
-
-// export default persistence({
-//   name: 'StatisticsStore',
-//   properties: ['progress'],
-//   adapter: new StorageAdapter({
-//     read: async (name) => {
-//       const data = window.localStorage.getItem(name);
-//       return data ? JSON.parse(data) : undefined;
-//     },
-//     write: async (name, content) => {
-//       window.localStorage.setItem(name, JSON.stringify(content));
-//     },
-//   }),
-//   reactionOptions: {
-//     // optional
-//     delay: 200,
-//   },
-// })(new StatisticsStore());
