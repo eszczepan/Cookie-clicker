@@ -42,7 +42,7 @@ const App: FC = () => {
   );
   const [currentAchievements, setCurrentAchievements] = useState<IAchievement[]>(achievements);
 
-  const { statistic, achievement } = useStores();
+  const { statistic, achievement, building } = useStores();
 
   // Interval update progress
   useEffect(() => {
@@ -71,17 +71,18 @@ const App: FC = () => {
   useEffect(() => {
     const newAchievement = checkAchievement(progress.totalCookies, cookiesAchievementsData);
     if (newAchievement !== null) {
+      achievement.add(newAchievement);
       const updated = [...cookiesAchievementsData].filter((obj) => newAchievement.id !== obj.id);
       setCookiesAchievementsData((prevState) => updated);
       setAchievementsProgress((prevState) => [...prevState, newAchievement]);
       setCurrentAchievements((prevState) => [...prevState, newAchievement]);
       localStorage.setItem('cookiesAchievementsData', JSON.stringify(updated));
     }
-  }, [progress.totalCookies, cookiesAchievementsData, achievementsProgress]);
+  }, [progress.totalCookies, cookiesAchievementsData, achievementsProgress, achievement]);
 
   // Handle cookie click and check clicking achievements
   const handleCookieClick = () => {
-    // statistic.cookieInc();
+    statistic.cookieInc();
     // statistic.tCookieInc();
     setProgress((prevState) => ({
       ...prevState,
@@ -102,6 +103,7 @@ const App: FC = () => {
 
   // Handle building purchase and check cps achievements
   const handleBuildingPurchase = (cost: number, index: number) => {
+    building.purchase(index);
     const updatedProgress = [...buildingProgress].map((el, i) => {
       const { quantity } = el;
       return i === index
