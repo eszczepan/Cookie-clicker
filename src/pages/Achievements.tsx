@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CardDeck } from 'react-bootstrap';
 
-import { IAchievement } from 'typings/models';
-import { achievements } from 'data/achievements';
 import MainTemplate from 'components/templates/MainTemplate';
 import AchievementCard from 'components/molecules/AchievmentICard/AchievementCard';
 
+import { useStores } from 'stores/RootStore';
+
 const Achievements = () => {
-  const [achievementsProgress, _] = useState<IAchievement[]>(
-    JSON.parse(localStorage.getItem('Achievements')!) || achievements
-  );
+  const { achievements } = useStores();
   return (
     <MainTemplate>
-      {achievementsProgress.length === 0 ? (
+      {achievements.achievements.length === 0 ? (
         <h1 className="mt-5 text-center">You have no achievements yet.</h1>
       ) : (
         <CardDeck className="d-flex justify-content-center flex-wrap m-4">
-          {achievementsProgress.map((item) => (
+          {achievements.achievements.map((item) => (
             <AchievementCard
               key={item.id}
               icon={item.icon}
