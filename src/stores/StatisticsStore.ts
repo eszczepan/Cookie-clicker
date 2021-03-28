@@ -4,13 +4,13 @@ import { clearPersist, stopPersist, startPersist } from 'mobx-persist-store';
 import { persistStore } from './persistStore';
 
 export class StatisticsStore {
-  cookies: number = 0;
-  totalCookies: number = 0;
-  cookieClicks: number = 0;
-  cookiesPerSecond: number = 0;
-  level: number = 1;
-  nextLevel: number = 10;
-  buildings: number = 0;
+  cookies = 0;
+  totalCookies = 0;
+  cookieClicks = 0;
+  cookiesPerSecond = 0;
+  level = 1;
+  nextLevel = 10;
+  buildings = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -30,14 +30,29 @@ export class StatisticsStore {
   }
 
   cookieInc = () => {
-    this.cookies = this.cookies + 1;
+    this.cookies = this.cookies + this.cookiesPerSecond / 10;
+    this.totalCookies = this.totalCookies + this.cookiesPerSecond / 10;
   };
 
-  tCookieInc = () => {
-    this.totalCookies = this.totalCookies + 1;
-  };
+  levelInc(): void {
+    this.level++;
+    this.nextLevel = this.nextLevel * 2;
+  }
 
-  clearStore() {
+  cookieClick(): void {
+    this.cookies++;
+    this.totalCookies++;
+    this.cookieClicks++;
+  }
+
+  purchase(cpsProgress: number, cost: number): void {
+    this.cookies = this.cookies - cost;
+    this.buildings++;
+    this.cookiesPerSecond = cpsProgress;
+    this.buildings++;
+  }
+
+  clearStore(): void {
     clearPersist(this);
     this.cookies = 0;
     this.totalCookies = 0;
@@ -48,11 +63,11 @@ export class StatisticsStore {
     this.buildings = 0;
   }
 
-  stopPersist() {
+  stopPersist(): void {
     stopPersist(this);
   }
 
-  startPersist() {
+  startPersist(): void {
     startPersist(this);
   }
 }

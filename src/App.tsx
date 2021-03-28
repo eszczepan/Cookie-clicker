@@ -1,17 +1,10 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Row, Col } from 'react-bootstrap';
 
 import { nFormatter } from 'utils/nFormatter';
-import { statistics } from 'data/statistics';
-import { buildings } from 'data/buildings';
-import { achievements } from 'data/achievements';
-import { cookiesAchievements } from 'api/cookiesAchievements';
-import { cpsAchievements } from 'api/cpsAchievements';
-import { clickingAchievements } from 'api/clickingAchievements';
 import { cpsCounter } from 'utils/cpsCounter';
 import { checkAchievement } from 'utils/checkAchievement';
-import { IBuilding, IStatistics, IAchievement } from 'typings/models';
 
 import MainTemplate from 'components/templates/MainTemplate';
 import CookieCounter from 'components/organisms/CookieCounter/CookieCounter';
@@ -22,89 +15,35 @@ import { useStores } from 'stores/RootStore';
 import { observer } from 'mobx-react';
 
 const App: FC = () => {
-  const [progress, setProgress] = useState<IStatistics>(
-    JSON.parse(localStorage.getItem('Progress')!) || statistics
-  );
-  const [buildingProgress, setBuildingProgress] = useState<IBuilding[]>(
-    JSON.parse(localStorage.getItem('Buildings')!) || buildings
-  );
-  const [achievementsProgress, setAchievementsProgress] = useState<IAchievement[]>(
-    JSON.parse(localStorage.getItem('Achievements')!) || achievements
-  );
-  const [cookiesAchievementsData, setCookiesAchievementsData] = useState<IAchievement[]>(
-    JSON.parse(localStorage.getItem('cookiesAchievementsData')!) || cookiesAchievements
-  );
-  const [clickingAchievementsData, setClickingAchievementsData] = useState<IAchievement[]>(
-    JSON.parse(localStorage.getItem('clickingAchievementsData')!) || clickingAchievements
-  );
-  const [cpsAchievementsData, setCpsAchievementsData] = useState<IAchievement[]>(
-    JSON.parse(localStorage.getItem('cpsAchievementsData')!) || cpsAchievements
-  );
-  const [currentAchievements, setCurrentAchievements] = useState<IAchievement[]>(achievements);
+  const { statistics, achievements, building } = useStores();
 
-  const { statistic, achievement, building } = useStores();
-
-  // Interval update progress
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((prevState) => ({
-        ...prevState,
-        cookies: prevState.cookies + prevState.cookiesPerSecond / 10,
-        totalCookies: prevState.totalCookies + prevState.cookiesPerSecond / 10,
-      }));
-      localStorage.setItem('Progress', JSON.stringify(progress));
-      localStorage.setItem('Buildings', JSON.stringify(buildingProgress));
-      localStorage.setItem('Achievements', JSON.stringify(achievementsProgress));
+      statistics.cookieInc();
     }, 100);
-
-    if (Math.round(progress.totalCookies) >= progress.nextLevel) {
-      setProgress((prevState) => ({
-        ...prevState,
-        level: prevState.level + 1,
-        nextLevel: prevState.nextLevel * 2,
-      }));
+    if (Math.round(statistics.totalCookies) >= statistics.nextLevel) {
+      console.log(statistics);
+      statistics.levelInc();
+    }
+    const newAchievement = checkAchievement(statistics.totalCookies, achievements.cookies);
+    if (newAchievement !== null) {
+      achievements.add(newAchievement);
+      achievements.updateCookies(newAchievement);
     }
     return () => clearInterval(interval);
-  }, [progress, buildingProgress, achievementsProgress, currentAchievements]);
+  }, [statistics.totalCookies, statistics, achievements]);
 
-  // Check total cookies achievements
-  useEffect(() => {
-    const newAchievement = checkAchievement(progress.totalCookies, cookiesAchievementsData);
-    if (newAchievement !== null) {
-      achievement.add(newAchievement);
-      const updated = [...cookiesAchievementsData].filter((obj) => newAchievement.id !== obj.id);
-      setCookiesAchievementsData((prevState) => updated);
-      setAchievementsProgress((prevState) => [...prevState, newAchievement]);
-      setCurrentAchievements((prevState) => [...prevState, newAchievement]);
-      localStorage.setItem('cookiesAchievementsData', JSON.stringify(updated));
-    }
-  }, [progress.totalCookies, cookiesAchievementsData, achievementsProgress, achievement]);
-
-  // Handle cookie click and check clicking achievements
   const handleCookieClick = () => {
-    statistic.cookieInc();
-    // statistic.tCookieInc();
-    setProgress((prevState) => ({
-      ...prevState,
-      cookies: prevState.cookies + 1,
-      totalCookies: prevState.totalCookies + 1,
-      cookieClicks: prevState.cookieClicks + 1,
-    }));
-    const newAchievement = checkAchievement(progress.cookieClicks + 1, clickingAchievementsData);
+    statistics.cookieClick();
+    const newAchievement = checkAchievement(statistics.cookieClicks + 1, achievements.clicking);
     if (newAchievement !== null) {
-      achievement.add(newAchievement);
-      const updated = [...clickingAchievementsData].filter((obj) => newAchievement.id !== obj.id);
-      setClickingAchievementsData((prevState) => updated);
-      setAchievementsProgress((prevState) => [...prevState, newAchievement]);
-      setCurrentAchievements((prevState) => [...prevState, newAchievement]);
-      localStorage.setItem('clickingAchievementsData', JSON.stringify(updated));
+      achievements.add(newAchievement);
+      achievements.updateClicks(newAchievement);
     }
   };
 
-  // Handle building purchase and check cps achievements
   const handleBuildingPurchase = (cost: number, index: number) => {
-    building.purchase(index);
-    const updatedProgress = [...buildingProgress].map((el, i) => {
+    const updatedProgress = building.buildings.map((el, i) => {
       const { quantity } = el;
       return i === index
         ? {
@@ -114,45 +53,31 @@ const App: FC = () => {
           }
         : el;
     });
-    setBuildingProgress(updatedProgress);
-    setProgress((prevState) => ({
-      ...prevState,
-      cookies: prevState.cookies - cost,
-      cookiesPerSecond: cpsCounter(updatedProgress),
-      buildings: prevState.buildings + 1,
-    }));
-    const newAchievement = checkAchievement(cpsCounter(updatedProgress), cpsAchievementsData);
+
+    building.purchase(updatedProgress);
+    const cpsProgress = cpsCounter(updatedProgress);
+    statistics.purchase(cpsProgress, cost);
+    const newAchievement = checkAchievement(cpsProgress, achievements.cps);
     if (newAchievement !== null) {
-      const updated = [...cpsAchievementsData].filter((obj) => newAchievement.id !== obj.id);
-      setCpsAchievementsData((prevState) => updated);
-      setAchievementsProgress((prevState) => [...prevState, newAchievement]);
-      setCurrentAchievements((prevState) => [...prevState, newAchievement]);
-      localStorage.setItem('cpsAchievementsData', JSON.stringify(updated));
+      achievements.add(newAchievement);
+      achievements.updateCps(newAchievement);
     }
   };
 
   const handleResetProgress = () => {
-    setBuildingProgress(buildings);
-    setProgress(statistics);
-    setAchievementsProgress(achievements);
-    setCurrentAchievements(achievements);
-    setCookiesAchievementsData(cookiesAchievements);
-    setClickingAchievementsData(clickingAchievements);
-    setCpsAchievementsData(cpsAchievements);
-    statistic.clearStore();
-    achievement.clearStore();
+    statistics.clearStore();
+    achievements.clearStore();
+    building.clearStore();
   };
 
-  const handleRemoveAchievement = (id: number) => {
-    setCurrentAchievements((prevState) => prevState.filter((obj) => id !== obj.id));
-  };
+  const handleRemoveAchievement = (id: number) => achievements.removeCurrent(id);
 
   return (
     <>
       <Helmet>
         <meta charSet="utf-8" />
         <title>
-          {nFormatter(Math.round(progress.cookies)).toString()} cookies | Cookie Clicker
+          {nFormatter(Math.round(statistics.cookies)).toString()} cookies | Cookie Clicker
         </title>
         <meta name="description" content="Cookie Clicker game" />
         <meta name="theme-color" content="#666" />
@@ -162,26 +87,26 @@ const App: FC = () => {
         <Row className="no-gutters" style={{ height: 'calc(100% - 51.44px)' }}>
           <Col className="h-100">
             <CookieCounter
-              totalCookies={Math.round(progress.totalCookies)}
-              counter={Math.round(progress.cookies)}
-              cps={Math.round((progress.cookiesPerSecond + Number.EPSILON) * 100) / 100}
-              level={progress.level}
+              totalCookies={Math.round(statistics.totalCookies)}
+              counter={Math.round(statistics.cookies)}
+              cps={Math.round((statistics.cookiesPerSecond + Number.EPSILON) * 100) / 100}
+              level={statistics.level}
               setCounter={handleCookieClick}
-              nextLevel={progress.nextLevel}
+              nextLevel={statistics.nextLevel}
             />
           </Col>
           <Col className="h-100">
             <Store
-              buildings={buildingProgress}
-              cookies={progress.cookies}
+              buildings={building.buildings}
+              cookies={statistics.cookies}
               handlePurchase={handleBuildingPurchase}
               handleResetProgress={handleResetProgress}
-              level={progress.level}
+              level={statistics.level}
             />
           </Col>
           <Col className="fixed-bottom">
             <Achievements
-              achievements={currentAchievements}
+              achievements={achievements.current}
               handleRemove={handleRemoveAchievement}
             />
           </Col>

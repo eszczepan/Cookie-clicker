@@ -4,8 +4,8 @@ import { AchievementsStore } from './AchievementsStore';
 import { BuildingsStore } from './BuildingsStore';
 
 class RootStore {
-  statistic = new StatisticsStore();
-  achievement = new AchievementsStore();
+  statistics = new StatisticsStore();
+  achievements = new AchievementsStore();
   building = new BuildingsStore();
 }
 
