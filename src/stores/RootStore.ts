@@ -6,7 +6,7 @@ import { BuildingsStore } from './BuildingsStore';
 class RootStore {
   statistics = new StatisticsStore();
   achievements = new AchievementsStore();
-  building = new BuildingsStore();
+  buildings = new BuildingsStore();
 }
 
 const StoresContext = createContext(new RootStore());

@@ -15,14 +15,13 @@ import { useStores } from 'stores/RootStore';
 import { observer } from 'mobx-react';
 
 const App: FC = () => {
-  const { statistics, achievements, building } = useStores();
+  const { statistics, achievements, buildings } = useStores();
 
   useEffect(() => {
     const interval = setInterval(() => {
       statistics.cookieInc();
     }, 100);
     if (Math.round(statistics.totalCookies) >= statistics.nextLevel) {
-      console.log(statistics);
       statistics.levelInc();
     }
     const newAchievement = checkAchievement(statistics.totalCookies, achievements.cookies);
@@ -35,7 +34,7 @@ const App: FC = () => {
 
   const handleCookieClick = () => {
     statistics.cookieClick();
-    const newAchievement = checkAchievement(statistics.cookieClicks + 1, achievements.clicking);
+    const newAchievement = checkAchievement(statistics.cookieClicks, achievements.clicking);
     if (newAchievement !== null) {
       achievements.add(newAchievement);
       achievements.updateClicks(newAchievement);
@@ -43,7 +42,7 @@ const App: FC = () => {
   };
 
   const handleBuildingPurchase = (cost: number, index: number) => {
-    const updatedProgress = building.buildings.map((el, i) => {
+    const updatedProgress = buildings.buildings.map((el, i) => {
       const { quantity } = el;
       return i === index
         ? {
@@ -54,7 +53,7 @@ const App: FC = () => {
         : el;
     });
 
-    building.purchase(updatedProgress);
+    buildings.purchase(updatedProgress);
     const cpsProgress = cpsCounter(updatedProgress);
     statistics.purchase(cpsProgress, cost);
     const newAchievement = checkAchievement(cpsProgress, achievements.cps);
@@ -67,7 +66,7 @@ const App: FC = () => {
   const handleResetProgress = () => {
     statistics.clearStore();
     achievements.clearStore();
-    building.clearStore();
+    buildings.clearStore();
   };
 
   const handleRemoveAchievement = (id: number) => achievements.removeCurrent(id);
@@ -75,12 +74,9 @@ const App: FC = () => {
   return (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
         <title>
           {nFormatter(Math.round(statistics.cookies)).toString()} cookies | Cookie Clicker
         </title>
-        <meta name="description" content="Cookie Clicker game" />
-        <meta name="theme-color" content="#666" />
       </Helmet>
 
       <MainTemplate>
@@ -97,7 +93,7 @@ const App: FC = () => {
           </Col>
           <Col className="h-100">
             <Store
-              buildings={building.buildings}
+              buildings={buildings.buildings}
               cookies={statistics.cookies}
               handlePurchase={handleBuildingPurchase}
               handleResetProgress={handleResetProgress}
