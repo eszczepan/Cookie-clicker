@@ -6,17 +6,19 @@ The seemingly endless gameplay makes it a game that can last an indefinite amoun
 
 Original [Cookie Clicker](http://orteil.dashnet.org/cookieclicker/) is a Javascript game released by [Orteil](https://cookieclicker.fandom.com/wiki/Orteil) on August 8, 2013.
 
-<p align="center">
+<div align="center">
   <img src="./src/assets/images/screenshots/screenshot-1.png" alt="Cookie-Clicker-screenshot">
-</p>
+</div>
 
-## Tech/framework
+## Technologies
 
 | Tech                                          | Description                          |
 | --------------------------------------------- | ------------------------------------ |
 | [React](https://reactjs.org/)                 | Library for building user interfaces |
 | [Typescript](https://www.typescriptlang.org/) | Javascript superset language         |
+| [MobX](https://mobx.js.org/)                  | Simple, scalable state management    |
 | [Bootstrap](https://getbootstrap.com/)        | UI library                           |
+| [ESLint](https://eslint.org/)                 | Javascript Linter                    |
 | [Prettier](https://prettier.io/)              | Code formatter                       |
 
 ## Installation
@@ -39,6 +41,10 @@ npm run start
 | `npm run build` | Create optimized build |
 | `npm run test`  | Run tests              |
 | `npm run eject` | Eject CRA              |
+
+## Live
+
+<a href="https://clicker-cookie.netlify.app/">https://clicker-cookie.netlify.app/</a>
 
 ## Resources
 
